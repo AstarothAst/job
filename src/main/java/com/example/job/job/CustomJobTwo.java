@@ -1,5 +1,7 @@
 package com.example.job.job;
 
+import com.example.job.api.SpeedController;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -8,19 +10,22 @@ import java.util.Optional;
 
 @Component
 @Slf4j
-public class CustomJobOne extends GenericJob {
+@RequiredArgsConstructor
+public class CustomJobTwo extends GenericJob {
 
-    int i = 0;
+    private final SpeedController speedController;
+
+    private int i = 0;
 
     @Override
     public void exec() {
-        log.info("Job one {}", i++);
+        log.info(">>>TWO {}", i++);
     }
 
     @Override
     public Instant computeNextExecuteInstant(Instant lastExecution) {
         return Optional.ofNullable(lastExecution)
                 .orElse(Instant.now())
-                .plusSeconds(1);
+                .plusSeconds(10 - speedController.getSpeed());
     }
 }

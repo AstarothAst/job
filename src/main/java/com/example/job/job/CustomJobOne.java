@@ -8,19 +8,19 @@ import java.util.Optional;
 
 @Component
 @Slf4j
-public class CustomJob extends GenericJob {
+public class CustomJobOne extends GenericJob {
 
     int i = 0;
 
     @Override
     public void exec() {
-        log.info("Trigger {}", i++);
+        log.info("Job one {}", i++);
     }
 
     @Override
     public Instant computeNextExecuteInstant(Instant lastExecution) {
         return Optional.ofNullable(lastExecution)
                 .orElse(Instant.now())
-                .plusSeconds(1);
+                .plusSeconds(3);
     }
 }
